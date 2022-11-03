@@ -3,7 +3,7 @@
 // - имя клиента
 // - телефон клиента
 // - объект с адресом доставки: {street, house, entrance, floor, flat}
-// - список товаров в заказе
+// - список товаров в заказе: // что здесь
 // - стоимость заказа с учетом скидок и доставки
 // Как результат функции требуется вернуть JSON,
 // cформированный в соответствии с правилами:
@@ -27,27 +27,48 @@
 //       "goods": [
 //         {
 //           "title": "Пицца",
-//           "count": 2
+//           "count": 2 //quantity
 //         }
 //      ]
 //    }
 // }
+//{ "data":{
+    //"goods":[{"title":"ptica","count":2}],
+    //"order":{
+    //          "address":"200let, 1, 3, 4 42",
+    //          "sum":300
+    //      },
+    //"client":"Petr 12345678"}
+//}
 
-function sendRequest(name, phone, address, goods, sum) {
-    let data = {client: ["", name + phone], goods: [title, count], order: {address, sum}};
+function sendRequest(name, phone, address, goods, sum) { // goods = [{title: ptica, count:2}, {title: pca, count:5}]
+    const data = {goods: [], order: {}};
 
-    let countOfGoods = goods.length;
+    let countOfGoods = goods.length; //10
 
-    for (let i = 0; i <= countOfGoods; i += 1) {
-        data.goods.push(goods[i].title);
+    for (let i = 0; i < countOfGoods; i++) { //9
+        const element = goods[i];
+        data.goods.push({title: element.title, count: i});  //[ptica, riba] / [{title: ptica, count:2}, {title: pca, count:5}]
     }
 
-    data.order.address = address;
-    data.order.sum = name + phone + address + goods + sum;
+    data.order.address = `${address.street}, ${address.house}, ${address.entrance}, ${address.floor,} ${address.flat}`;
+    data.order.sum = sum;
 
-    data.client = 'Иван';
+    data.client = name + ' ' + phone;
 
-    let jsonData = JSON.stringify({data});
+    const jsonData = JSON.stringify({data});
 
-    return JSON;
+    return jsonData;
 }
+
+function sendRequest2(name, phone, address, goods, sum) {
+    return JSON.stringify({goods, order: {
+        address: `${address.street}, ${address.house}, ${address.entrance}, ${address.floor}, ${address.flat}`,
+        sum,
+    }, client: `${name} ${phone}`});
+}
+
+
+const adr = {street: '200let', house: 1, entrance: 3, floor:4, flat: 42};
+console.log(sendRequest('Petr', '12345678', adr, [{title: ptica, count:2}, {title: pca, count:5}], 300))
+//RESULT: {"data":{"goods":[{"title":"pizza","count":2},{"title":"chicken","count":5}],"order":{"address":"200let, 1, 3, 4, 42","sum":300},"client":"Petr 12345678"}}
