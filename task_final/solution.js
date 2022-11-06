@@ -51,7 +51,7 @@ function sendRequest(name, phone, address, goods, sum) { // goods = [{title: pti
         data.goods.push({title: element.title, count: element.count});  //[ptica, riba] / [{title: ptica, count:2}, {title: pca, count:5}]
     }
 
-    data.order.address = `${address.street}, ${address.house}, ${address.entrance}, ${address.floor}, ${address.flat}`;
+    data.order.address = `ул. ${address.street}, дом ${address.house}, ${address.entrance} подъезд, ${address.floor} этаж, кв ${address.flat}`;
     data.order.sum = sum;
 
     data.client = name + ' ' + phone;
@@ -60,15 +60,3 @@ function sendRequest(name, phone, address, goods, sum) { // goods = [{title: pti
 
     return jsonData;
 }
-
-//function sendRequest2(name, phone, address, goods, sum) {
-//    return JSON.stringify({goods, order: {
-//       address: `${address.street}, ${address.house}, ${address.entrance}, ${address.floor}, ${address.flat}`,
-//        sum,
-//    }, client: `${name} ${phone}`});
-//}
-
-
-const adr = {street: 'ул. 200 let', house: 'дом 1', entrance: 'подъезд 3', floor:'этаж 4', flat: 'квартира 42'};
-console.log(sendRequest('Petr', '12345678', adr, [{title: ptica, count:2}, {title: pca, count:5}], 300))
-//RESULT: {"data":{"goods":[{"title":"pizza","count":2},{"title":"chicken","count":5}],"order":{"address":"200let, 1, 3, 4, 42","sum":300},"client":"Petr 12345678"}}
